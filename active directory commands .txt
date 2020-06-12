@@ -1,0 +1,28 @@
+
+Active Directory Module needed 
+
+Query for new users: set time frame in days
+ 
+$When = ((Get-Date).AddDays(-22)).Date
+Get-ADUser -Filter {whenCreated -ge $When} -Properties whenCreated | select Name, SamAccountName, UserPrincipalName, objectClass, whenCreated | export-csv -Path C:\Documents\new_users.csv -NoTypeInformation
+
+OS fingerprinting 
+
+ Get-ADComputer -Filter * -property * | Format-table Name, Operatingsystem,operatingsystemversion
+
+Query by OS 
+
+Get-ADComputer -Filter {operatingsystem -eq "windows 10 Pro"} -property * 
+
+Users that left
+
+$path='ou=Departed Users, dc=dcas, dc=nycnet'
+Get-ADUser -Filter * -SearchBase $path | Get-ADUser -Properties * | select name, description, whenchanged
+
+Information on users 
+
+ Get-ADUser -Properties * | select name, telephoneNumber,MobilePhone,mobile,OfficePhone,StreetAddress| export-csv C:\moredetail.csv
+
+Get all windows 7 on the network 
+Get-ADComputer -Filter {operatingsystem -Like "windows 7*"} -property * | select Name,OperatingSystem,OperatingSystemServicePack,OperatingSystemVersion | export-csv -Path C:\Users\Desktop\windows7.csv
+
