@@ -1,0 +1,20 @@
+@echo off
+
+::Script to query a service on multiple hosts
+
+::Populate host file with targets. For loop will go through each 
+:: host and complete the task within the loop 
+
+for /f "tokens=*" %%a in (hosts.txt) do (
+
+
+:: for loop calls changes directory to locate psservice then 
+:: queries for hardcoded service. if you need to change service locate servicename then hardcode
+
+
+  echo querying for service on %%a
+  cd C:\
+  cd C:\Users\Downloads\PSTools\
+  psservice \\%%a query "YOUR SERVICE" >>results.txt
+ 
+)
